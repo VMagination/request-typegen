@@ -1,4 +1,3 @@
-import './../typeGen-placeholder.d.ts';
 import fs from 'vite-plugin-fs/browser';
 
 type Fn = (...args: any[]) => Promise<any>;
@@ -61,16 +60,12 @@ const wrapKey = (key: string) => /^[a-zA-Z0-9_]+$/.test(key) ? key : `'${key}'`;
 const addToTypeGen = async (key: string, readable: any) => {
   await state.process;
   const fn = async () => {
-    const hasFile = await fs.stat('TypeGen.ts').catch(() => null);
-    const prevFile = hasFile ? await fs.readFile('TypeGen.ts') : '';
+    const hasFile = await fs.stat('typeGen.d.ts').catch(() => null);
+    const prevFile = hasFile ? await fs.readFile('typeGen.d.ts') : '';
     const prev = prevFile.split('// TypeGen Separator').filter((v) => !v.includes(`${wrapKey(key)}: `)).join('// TypeGen Separator');
     await fs.writeFile(
-      'TypeGen.ts',
-      prev + `${prev ? '\n' : ''}// TypeGen Separator\nexport interface TypeGenMain {\n    ${wrapKey(key)}: ${typeMapToString(getTypeMapFromObj(readable), 1)}\n}`,
-    );
-    await fs.writeFile(
       'typeGen.d.ts',
-      `declare global {\n  import { TypeGenMain as TypeG } from './TypeGen';\n  interface TypeGenMain extends TypeG {}\n}\nexport * from './TypeGen';\n`,
+      prev + `${prev && prev.includes('export {};') ? '' : 'export {};\n'}// TypeGen Separator\ndeclare global {\n    interface TypeGenMain {\n        ${wrapKey(key)}: ${typeMapToString(getTypeMapFromObj(readable), 2)}\n    }\n}\n`,
     );
   }
   state.process = fn();

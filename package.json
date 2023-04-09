@@ -1,11 +1,11 @@
 {
   "name": "@vmagination/request-typegen",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "type": "module",
-  "main": "lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "for/index.js",
+  "types": "./for/index.d.ts",
   "files": [
-    "lib",
+    "for",
     "typeGen-placeholder.d.ts"
   ],
   "scripts": {
@@ -15,21 +15,21 @@
   },
   "exports": {
     ".": {
-      "import": "./lib/index.js",
-      "types": "./lib/index.d.ts"
+      "import": "./for/index.js",
+      "require": "./for/index.cjs"
     },
     "./node": {
-      "import": "./lib/node.js",
-      "types": "./lib/react-native.d.ts"
+      "import": "./for/node.js",
+      "require": "./for/node.cjs"
     },
-    "./vite": {
-      "import": "./lib/vite.js",
-      "types": "./lib/vite.d.ts"
+    "./for/node": {
+      "import": "./for/node.js",
+      "require": "./for/node.cjs"
     },
-    "./react-native": {
-      "import": "./lib/react-native.js",
-      "types": "./lib/react-native.d.ts"
-    }
+    "./vite": "./for/vite.js",
+    "./for/vite": "./for/vite.js",
+    "./react-native": "./for/react-native.js",
+    "./for/react-native": "./for/react-native.js"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
@@ -39,10 +39,14 @@
     "vite-plugin-fs": "^1.0.0-beta.6"
   },
   "peerDependencies": {
-    "vite-plugin-fs": "^1.0.0-beta.6"
+    "vite-plugin-fs": "^1.0.0-beta.6",
+    "fs": "any"
   },
   "peerDependenciesMeta": {
     "vite-plugin-fs": {
+      "optional": true
+    },
+    "fs": {
       "optional": true
     }
   }
