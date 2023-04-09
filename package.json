@@ -1,0 +1,49 @@
+{
+  "name": "@vmagination/request-typegen",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib",
+    "typeGen-placeholder.d.ts"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./node": {
+      "import": "./lib/node.js",
+      "types": "./lib/react-native.d.ts"
+    },
+    "./vite": {
+      "import": "./lib/vite.js",
+      "types": "./lib/vite.d.ts"
+    },
+    "./react-native": {
+      "import": "./lib/react-native.js",
+      "types": "./lib/react-native.d.ts"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0",
+    "vite-plugin-dts": "^2.2.0",
+    "vite-plugin-fs": "^1.0.0-beta.6"
+  },
+  "peerDependencies": {
+    "vite-plugin-fs": "^1.0.0-beta.6"
+  },
+  "peerDependenciesMeta": {
+    "vite-plugin-fs": {
+      "optional": true
+    }
+  }
+}
