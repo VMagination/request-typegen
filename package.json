@@ -1,33 +1,43 @@
 {
   "name": "@vmagination/request-typegen",
-  "version": "0.1.2",
-  "type": "module",
+  "version": "0.3.0-rc.9",
+  "description": "Dynamic type generator for API responses",
   "main": "for/index.js",
   "types": "./for/index.d.ts",
   "files": [
     "for",
+    "bin",
     "typeGen-placeholder.d.ts"
   ],
+  "bin": {
+    "typegen-file-server": "bin/cli.js"
+  },
   "scripts": {
     "dev": "vite",
+    "cli": "node ./bin/cli.js",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "exports": {
     ".": {
-      "import": "./for/index.js",
-      "require": "./for/index.cjs"
+      "import": "./for/index.mjs",
+      "types": "./for/index.d.ts",
+      "require": "./for/index.js"
     },
     "./node": {
-      "import": "./for/node.js",
-      "require": "./for/node.cjs"
+      "import": "./for/node.mjs",
+      "types": "./for/node.d.ts",
+      "require": "./for/node.js"
     },
     "./for/node": {
-      "import": "./for/node.js",
-      "require": "./for/node.cjs"
+      "import": "./for/node.mjs",
+      "types": "./for/node.d.ts",
+      "require": "./for/node.js"
     },
     "./vite": "./for/vite.js",
     "./for/vite": "./for/vite.js",
+    "./mock": "./for/mock.js",
+    "./for/mock": "./for/mock.js",
     "./react-native": "./for/react-native.js",
     "./for/react-native": "./for/react-native.js"
   },
@@ -39,8 +49,8 @@
     "vite-plugin-fs": "^1.0.0-beta.6"
   },
   "peerDependencies": {
-    "vite-plugin-fs": "^1.0.0-beta.6",
-    "fs": "any"
+    "fs": "any",
+    "vite-plugin-fs": "^1.0.0-beta.6"
   },
   "peerDependenciesMeta": {
     "vite-plugin-fs": {
@@ -49,5 +59,9 @@
     "fs": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "commander": "^10.0.1"
   }
 }

@@ -11,19 +11,21 @@ export default defineConfig({
   ],
   build: {
     outDir: 'for',
-    sourcemap: true,
-    emptyOutDir: false, // important to add otherwise vite will remove the dist folder before run the second build
+    sourcemap: false,
+    emptyOutDir: false,
     lib: {
       entry: [
         path.resolve(__dirname, './src/index.ts'),
         path.resolve(__dirname, './src/node.ts'),
         path.resolve(__dirname, './src/vite.ts'),
+        path.resolve(__dirname, './src/mock.ts'),
         path.resolve(__dirname, './src/react-native.ts'),
       ],
       formats: ['cjs', 'es'],
     },
     rollupOptions: {
-      external: ['virtual:fs'],
+      treeshake: 'recommended',
+      external: ['virtual:fs', 'fs'],
     }
   }
 })
