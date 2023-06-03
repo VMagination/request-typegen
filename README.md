@@ -2,11 +2,11 @@
 
 Dynamic type generator for API responses.
 
-![preview](./doc-assets/typegen.gif)
+![preview](./doc-assets/typegen2.gif)
 
 > Current version is more of a proof of concept. It works, and it may be used in production since it's only designed for use during development. But it's not yet optimized, and you might need to do some extra steps to make it work in some environments.
 
-Making requests to API is a common task in any application. But adding types can be a tedious task, especially if API is in active development and changes return fields. This library aims to make it easier by generating and updating types for you. The only question you have to answer is: Are you lazy enough to install a library to not do something trivial manually?
+Making requests to API is a common task in any application. But adding types can be a tedious task, especially if API is in active development and changes return fields. This library aims to make it easier by generating and updating types for you. The only question you have to ask yourself is: Are you lazy enough to install a library to not do something trivial manually?
 
 
 ## Installation
@@ -79,7 +79,7 @@ import { typeGenWrapper } from '@vmagination/request-typegen/react-native';
 import { typeGenWrapper } from '@vmagination/request-typegen/for/react-native';
 
 const request = typeGenWrapper(fetch, {
-  isDev: __DEV__,
+  enabled: __DEV__,
   fsUrl: 'http://${externalIP}:${port}',
 });
 ```
@@ -89,7 +89,7 @@ const request = typeGenWrapper(fetch, {
 
 Starting file server is required to generated types
 ```sh
-  npx typegen-file-server start --port 4832
+  npx typegen-file-server start
 ```
 or open in new terminal
 ```shell
@@ -102,7 +102,7 @@ Add file server url to config
 import { typeGenWrapper } from '@vmagination/request-typegen';
 
 const request = typeGenWrapper(fetch, {
-  isDev: __DEV__,
+  enabled: __DEV__,
   fsUrl: 'http://localhost:4832',
 });
 ```
@@ -122,8 +122,7 @@ A brief description of what the function does and its purpose in the library.
 - `config` (TypeGenConfig): Configuration for type generation.
 ```ts
 type TypeGenConfig<T extends Fn, RT extends Promise<any>> = {
-  isDev?: boolean; // should enable type generation 
-  // ^ will be renamed
+  enabled?: boolean; // should enable type generation, pass isDev flag here
   ignoreConstructors?: boolean; // should generate types for non-default objects
   writeFile: (path: string, content: string) => any | Promise<any>;
   // ^ overrides default writeFile function for saving type file
@@ -131,9 +130,9 @@ type TypeGenConfig<T extends Fn, RT extends Promise<any>> = {
   // ^ overrides default readFile function for reading saved type file
   fileExists: (path: string) => any | Promise<any>;
   // ^ overrides default fileExists function for checking saved type file
-  getReadableResponse?: (res: Awaited<ReturnType<T>>, ...args: Parameters) => RT;
-  // ^ what field to use for type generation, will be returned as the function's result
-  // ^ will be renamed and replaced with a single field name
+  focusField?: string; 
+  // ^ focus on specific return field for type generation, the field can be a function
+  // ^ must be provided if the field is not json (fetch) or data (axios)
 }
 ```
 
@@ -194,4 +193,6 @@ const result = await request
 ```
 
 ## ToDo list
+- [ ] Find a way to derive stable key from function arguments
+- [ ] Find a way to avoid using file server or a way to start it automatically
 - [ ] Find a reason to continue development

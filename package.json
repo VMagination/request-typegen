@@ -1,7 +1,18 @@
 {
   "name": "@vmagination/request-typegen",
-  "version": "0.3.0-rc.9",
+  "version": "0.3.1",
   "description": "Dynamic type generator for API responses",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VMagination/request-typegen/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VMagination/request-typegen"
+  },
+  "keywords": [
+    "typegen"
+  ],
   "main": "for/index.js",
   "types": "./for/index.d.ts",
   "files": [
