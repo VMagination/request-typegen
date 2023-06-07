@@ -14,6 +14,16 @@ program
   .action((port) => {
     const server = http.createServer((req, res) => {
       try {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
+        res.setHeader('Access-Control-Max-Age', 2592000);
+
+        if (req.method === 'OPTIONS') {
+          res.statusCode = 204;
+          res.end();
+          return;
+        }
+
         const urlObj = url.parse(req.url, true);
         if (urlObj.pathname === '/readFile' && req.method === 'GET') {
           const urlObj = url.parse(req.url, true);
